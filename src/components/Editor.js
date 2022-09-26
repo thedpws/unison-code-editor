@@ -13,12 +13,27 @@ export default class Editor extends Component {
   render() {
     return (
       <AceEditor
-        mode='java'
-        theme='twilight'
-        onChange={onChange}
-        name='UNIQUE_ID_OF_DIV'
-        editorProps={{ $blockScrolling: true }}
-      />
+        placeholder="Placeholder Text"
+        mode="java"
+        theme="solarized_dark"
+        name="main_editor"
+        onLoad={this.onLoad}
+        onChange={this.onChange}
+        fontSize={18}
+        showPrintMargin={true}
+        showGutter={true}
+        highlightActiveLine={true}
+        value={`void onLoad(editor) {
+  console.log("i've loaded");
+}`}
+        setOptions={{
+          enableBasicAutocompletion: false,
+          enableLiveAutocompletion: false,
+          enableSnippets: false,
+          showLineNumbers: true,
+          tabSize: 2,
+        }} />
+
     )
   }
 }
