@@ -1,39 +1,33 @@
-import React, { Component } from 'react'
+import React from 'react'
 import AceEditor from 'react-ace'
 
 import 'ace-builds/src-noconflict/mode-java'
 import 'ace-builds/src-noconflict/theme-twilight'
+import 'ace-builds/src-noconflict/theme-solarized_dark'
 import 'ace-builds/src-noconflict/ext-language_tools'
 
-function onChange(newValue) {
-  console.log('change', newValue)
+const Editor = (props) => {
+  return (
+    <AceEditor
+      placeholder='Placeholder Text'
+      mode='java'
+      theme='twilight'
+      name='main_editor'
+      onChange={(value) => {
+        props.setValue(value)
+      }}
+      fontSize={18}
+      showPrintMargin={true}
+      showGutter={true}
+      highlightActiveLine={true}
+      setOptions={{
+        enableBasicAutocompletion: true,
+        enableLiveAutocompletion: true,
+        enableSnippets: false,
+        showLineNumbers: true,
+        tabSize: 2,
+      }}
+    />
+  )
 }
-
-export default class Editor extends Component {
-  render() {
-    return (
-      <AceEditor
-        placeholder="Placeholder Text"
-        mode="java"
-        theme="solarized_dark"
-        name="main_editor"
-        onLoad={this.onLoad}
-        onChange={this.onChange}
-        fontSize={18}
-        showPrintMargin={true}
-        showGutter={true}
-        highlightActiveLine={true}
-        value={`void onLoad(editor) {
-  console.log("i've loaded");
-}`}
-        setOptions={{
-          enableBasicAutocompletion: false,
-          enableLiveAutocompletion: false,
-          enableSnippets: false,
-          showLineNumbers: true,
-          tabSize: 2,
-        }} />
-
-    )
-  }
-}
+export default Editor
