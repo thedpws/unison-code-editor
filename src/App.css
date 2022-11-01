@@ -1,7 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .App {
   text-align: center;
 }
 .title {
+  margin-top: 10px;
+  margin-bottom: 10px;
   height: 70px;
   font-size: 40px;
 }
@@ -14,13 +20,20 @@
   float: left;
   background: rgb(154, 161, 154);
   height: 500px;
+  resize: horizontal;
+  overflow: auto;
 }
 .instructions {
 }
 .right-panel {
-  margin-left: 50%;
+  width: 50%;
   height: 100px;
+  float: right;
+  height: 500px;
+  resize: horizontal;
+  overflow: auto;
   background: blue;
+  position: relative;
 }
 .App-header {
   background-color: #282c34;
@@ -33,6 +46,11 @@
   color: white;
 }
 .btn {
-  margin-top: 10px;
+  position: absolute;
+  right: 3%;
+  bottom: 3%;
   font-size: 25px;
+  font-size: 14px;
+  background-color: limegreen;
+
 }

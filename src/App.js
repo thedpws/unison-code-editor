@@ -2,12 +2,15 @@ import { useState } from 'react'
 
 import Editor from './components/Editor'
 import './App.css'
+import Split from 'react-split'
+import Panels from './components/Panels'
+import './styles/styles.css';
 
 function App() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [value, setValue] = useState('hello world')
-
+  const [instructionText, setInstructionText] = useState('')
   const submitCodeHandler = () => {
     console.log(value)
     if (value) {
@@ -41,23 +44,8 @@ function App() {
   }
   return (
     <div className='App'>
-      <div className='title'>Unison Live Code Editor</div>
-      <div className='window'>
-        <div className='left-panel'>
-          <h2 className='instructions'>Instructions:</h2>
-        </div>
-        {/* TODO: fix this right-panel div */}
-        <div className=''>
-          <Editor setValue={setValue} />
-          <button
-            type='button'
-            className='btn submit-button'
-            onClick={submitCodeHandler}
-          >
-            Submit
-          </button>
-        </div>
-      </div>
+      <div className='my-4 font-sans text-2xl font-bold'>Unison Live Code Editor</div>
+      <Panels/>
     </div>
   )
 }
