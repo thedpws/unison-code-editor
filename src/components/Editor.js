@@ -9,12 +9,15 @@ import 'ace-builds/src-noconflict/ext-language_tools'
 const Editor = (props) => {
   return (
     <AceEditor
-      placeholder="Insert Code Here"
+      placeholder='Insert Code Here'
       width='100%'
       height='100%'
-      mode="java"
-      theme="twilight"
-      name="editor1"
+      mode='java'
+      theme='twilight'
+      name='editor1'
+      onChange={(value) => {
+        props.setEditorValue(value)
+      }}
       wrapEnabled='true'
       fontSize={14}
       showPrintMargin={true}
@@ -29,8 +32,8 @@ const Editor = (props) => {
         enableSnippets: false,
         showLineNumbers: true,
         tabSize: 2,
-
-      }} />
+      }}
+    />
   )
 }
 export default Editor
