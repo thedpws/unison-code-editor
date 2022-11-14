@@ -24,7 +24,7 @@ function App() {
       }
       fetch(
         // Edward's local mock postman server
-        'https://b7c0c193-c9c6-4488-bad8-52c20c7d7b29.mock.pstmn.io/submit',
+        'https://14014203-d71d-4c9c-8f55-8a2f19d818e5.mock.pstmn.io/submit',
         {
           method: 'POST',
           headers: new Headers({
@@ -36,6 +36,7 @@ function App() {
       )
         .then((response) => response.json())
         .then((data) => {
+          console.log('Data recieved post')
           console.log(data)
           setOutputText(data)
           setLoading(false)
@@ -46,6 +47,27 @@ function App() {
           setError('Something went wrong, please try again later.')
         })
     }
+  }
+
+  const getTestResults = () => {
+    fetch(
+      // Edward's local mock postman server
+      'https://14014203-d71d-4c9c-8f55-8a2f19d818e5.mock.pstmn.io/results'
+    )
+      .then((response) => {
+        response.text()
+      })
+      .then((text) => {
+        console.log('Data recieved get')
+        console.log(text)
+        setOutputText(text)
+        setLoading(false)
+        setError(null)
+      })
+      .catch((error) => {
+        setLoading(false)
+        setError('Something went wrong, please try again later.')
+      })
   }
   return (
     <div className='App'>
@@ -59,10 +81,17 @@ function App() {
       />
       <button
         type='button'
-        className='btn submit-button'
+        className='btn right-60 bottom-10 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
         onClick={submitCodeHandler}
       >
         Submit
+      </button>
+      <button
+        type='button'
+        className='btn right-30 bottom-10 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
+        onClick={getTestResults}
+      >
+        Get Test Results
       </button>
     </div>
   )

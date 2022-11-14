@@ -18,7 +18,7 @@ const Editor = (props) => {
       onChange={(value) => {
         props.setEditorValue(value)
       }}
-      wrapEnabled='true'
+      wrapEnabled={true}
       fontSize={14}
       showPrintMargin={true}
       showGutter={true}
