@@ -20,7 +20,7 @@ const Editor = (props) => {
       }}
       wrapEnabled={true}
       fontSize={14}
-      showPrintMargin={true}
+      showPrintMargin={false}
       showGutter={true}
       highlightActiveLine={true}
       defaultValue={`public static void main(String[] args){
