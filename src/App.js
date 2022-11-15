@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 import Editor from './components/Editor'
 import './App.css'
@@ -14,6 +14,9 @@ function App() {
   const [outputText, setOutputText] = useState('Enter Output here')
   const [editorValue, setEditorValue] = useState('')
 
+  // Edward's local mock postman server
+  var testServer = 'https://b7892dbe-8db6-4ff4-9fe4-7b3bc05cab60.mock.pstmn.io'
+
   const submitCodeHandler = () => {
     console.log(editorValue)
     if (value) {
@@ -22,18 +25,14 @@ function App() {
         description: editorValue,
         userId: 1,
       }
-      fetch(
-        // Edward's local mock postman server
-        'https://14014203-d71d-4c9c-8f55-8a2f19d818e5.mock.pstmn.io/submit',
-        {
-          method: 'POST',
-          headers: new Headers({
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          }),
-          body: JSON.stringify(newComment),
-        }
-      )
+      fetch(testServer + '/submit', {
+        method: 'POST',
+        headers: new Headers({
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        }),
+        body: JSON.stringify(newComment),
+      })
         .then((response) => response.json())
         .then((data) => {
           console.log('Data recieved post')
@@ -52,15 +51,15 @@ function App() {
   const getTestResults = () => {
     fetch(
       // Edward's local mock postman server
-      'https://14014203-d71d-4c9c-8f55-8a2f19d818e5.mock.pstmn.io/results'
+      testServer + '/results'
     )
-      .then((response) => {
-        response.text()
+      .then((data) => {
+        data.json()
       })
-      .then((text) => {
-        console.log('Data recieved get')
-        console.log(text)
-        setOutputText(text)
+      .then((data) => {
+        console.log('test results recieved get')
+        console.log(data)
+        setOutputText(data)
         setLoading(false)
         setError(null)
       })
@@ -69,6 +68,27 @@ function App() {
         setError('Something went wrong, please try again later.')
       })
   }
+
+  const getInstructions = () => {
+    fetch('http://localhost:3333/instructions')
+      .then((data) => {
+        data.json()
+      })
+      .then((data) => {
+        //console.log('instructions recieved get')
+        console.log(data)
+        setInstructionText(data)
+        setLoading(false)
+        setError(null)
+      })
+      .catch((error) => {
+        setLoading(false)
+        setError('Something went wrong, please try again later.')
+      })
+  }
+
+  useEffect(() => getInstructions(), [])
+
   return (
     <div className='App'>
       <div className='my-4 font-sans text-2xl font-bold'>
