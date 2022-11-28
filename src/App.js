@@ -13,7 +13,7 @@ function App() {
   const [instructionText, setInstructionText] = useState('Enter Instructions')
   const [outputText, setOutputText] = useState('Enter Output here')
   const [editorValue, setEditorValue] = useState('')
-
+  const [examples, setExamples] = useState(['example 1', 'example 2', 'example 3', 'example 4'])
   // Edward's local mock postman server
   var testServer = 'https://b7892dbe-8db6-4ff4-9fe4-7b3bc05cab60.mock.pstmn.io'
 
@@ -97,6 +97,7 @@ function App() {
       <Panels
         setEditorValue={setEditorValue}
         instructions={instructionText}
+        examples={examples}
         outputText={outputText}
       />
       <button

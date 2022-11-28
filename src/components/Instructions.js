@@ -6,9 +6,20 @@ const Instructions = (props) => {
       <div className='text-lg font-semibold font-sans text-left'>
         Instructions
       </div>
-      <div className='mt-3 flex-1 overscroll-y-auto overflow-auto p-2 bg-gray-400'>
-        {props.text}
+      <div className='space-y-8'>
+        <div className='mt-3 p-2 flex-1 overscroll-y-auto overflow-auto bg-gray-400'>
+          {props.text}
+        </div>
+        <div>
+          {props.examples.map(example => {
+            return (<div key={example}>
+              {example}
+            </div>
+            )
+          })}
+        </div>
       </div>
+
     </div>
   )
 }
