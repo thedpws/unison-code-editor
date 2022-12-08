@@ -5,6 +5,7 @@ import './App.css'
 import Split from 'react-split'
 import Panels from './components/Panels'
 import './styles/styles.css'
+import {AiFillPlayCircle} from 'react-icons/ai'
 
 function App() {
   const [loading, setLoading] = useState(true)
@@ -109,10 +110,11 @@ function App() {
       </button>
       <button
         type='button'
-        className='btn right-30 bottom-10 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
+        className='btn right-30 bottom-10 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded whitespace-nowrap'
         onClick={getTestResults}
       >
-        Submit
+        Submit <AiFillPlayCircle />
+        
       </button>
     </div>
   )
