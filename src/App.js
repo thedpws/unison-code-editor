@@ -6,6 +6,7 @@ import Split from "react-split";
 import Panels from "./components/Panels";
 import "./styles/styles.css";
 import { AiFillPlayCircle } from "react-icons/ai";
+import Header from "./components/Header";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -109,12 +110,10 @@ function App() {
   };
 
   useEffect(() => getInstructions(), []);
-
+  console.log(testcases)
   return (
     <div className="App">
-      <div className="my-4 font-sans text-2xl font-bold">
-        Unison Live Code Editor
-      </div>
+      <Header/>
       <Panels
         setEditorValue={setEditorValue}
         instructions={instructionText}
