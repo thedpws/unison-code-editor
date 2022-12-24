@@ -23,7 +23,10 @@ const Panels = (props) => {
         </div>
       </Split>
       <div className="bg-gray-400 flex">
-        <Output testCases={props.testCases} />
+        <Output
+          testCases={props.testCases}
+          submitCodeHandler={props.submitCodeHandler}
+          />
       </div>
     </Split>
   );
