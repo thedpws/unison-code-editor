@@ -119,21 +119,9 @@ function App() {
         instructions={instructionText}
         examples={examples}
         testCases={testCases}
+        submitCodeHandler={submitCodeHandler}
+        getMockTestResults={getMockTestResults}
       />
-      <button
-        type="button"
-        className="btn right-60 bottom-100 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        onClick={submitCodeHandler}
-      >
-        Run Code
-      </button>
-      <button
-        type="button"
-        className="btn right-30 bottom-10 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded whitespace-nowrap"
-        onClick={getMockTestResults}
-      >
-        Submit <AiFillPlayCircle />
-      </button>
     </div>
   );
 }

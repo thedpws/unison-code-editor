@@ -1,11 +1,11 @@
 import { useState } from "react";
-import {BsXCircle} from 'react-icons/bs'
-import {BsCheckCircle} from 'react-icons/bs'
+import { BsXCircle } from 'react-icons/bs'
+import { BsCheckCircle } from 'react-icons/bs'
 const TestCase = (props) => {
 
   return (
     // <div className="relative m-6 flex flex-col">
-    <div>
+    <div className='flex' style={{ overflow: 'hidden', whiteSpace: "nowrap" }}>
       {/* <div className="text-lg font-semibold font-sans text-left">
       </div> */}
 
@@ -14,10 +14,12 @@ const TestCase = (props) => {
         //   Test Case {props.number}
         // </div>
         <button
-          className="flex flex-row bg-green-400 hover:bg-green-700 text-white font-bold py-2 px-4"
-          onClick={()=>{props.setSelectedCase(props.number)}}>
-          Test Case {props.number}
-          <BsCheckCircle/>
+          className="flex items-center gap-2 bg-green-400 hover:bg-green-700 text-white text-sm font-bold py-2 px-4"
+          onClick={() => { props.setSelectedCase(props.number) }}>
+          <div>
+            Test Case {props.number}
+          </div>
+          <BsCheckCircle />
         </button>
 
       ) : (
@@ -25,10 +27,12 @@ const TestCase = (props) => {
         //   Test Case {props.number}
         // </div>
         <button
-          class="flex flex-row bg-red-400 hover:bg-red-700 text-white font-bold py-2 px-4 "
-          onClick={()=>{props.setSelectedCase(props.number)}}>
-          Test Case {props.number}
-          <BsXCircle/>
+          class="flex items-center gap-2 bg-red-400 hover:bg-red-700 text-white font-bold text-sm py-2 px-4 "
+          onClick={() => { props.setSelectedCase(props.number) }}>
+          <div>
+            Test Case {props.number}
+          </div>
+          <BsXCircle />
         </button>
       )}
     </div>

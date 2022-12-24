@@ -18,8 +18,14 @@ const Instructions = (props) => {
             )
           })}
         </div>
+        <div className='mt-3 p-2 flex-1 overscroll-y-auto overflow-auto bg-gray-400'>
+          Input Format
+        </div>
+        <div className='mt-3 p-2 flex-1 overscroll-y-auto overflow-auto bg-gray-400'>
+          Output Format
+        </div>
       </div>
-
+      
     </div>
   )
 }

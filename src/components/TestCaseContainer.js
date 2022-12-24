@@ -23,9 +23,9 @@ const TestCaseContainer = (props) => {
             </div> */}
 
             {/*Create Grid*/}
-            <div className='grid grid-cols-5 bg-gray-200 '>
-                <div className='bg-gray-700 p-2 flex-1 overscroll-y-auto overflow-auto'>
-                    <div className="bg-gray-400">
+            <div className='grid grid-cols-8 bg-gray-300 '>
+                <div className='bg-gray-700 col-span-2 p-2 flex-1 overscroll-y-auto overflow-auto'>
+                    <div>
                         {props.testCases?.map((testcase) => {
                             return (
                                 <TestCase
@@ -40,14 +40,14 @@ const TestCaseContainer = (props) => {
 
                     </div>
                 </div>
-                <div className='col-span-4 bg-gray-300'>
+                <div className='col-span-6 bg-gray-500'>
                     <div>
                         <h1 className='text-xl font-bold'>
-                            {"Test Case " + selectedCase + ": " + props.testCases[selectedCase].result}
+                            {"Test Case " + selectedCase + ": " + props.testCases[selectedCase - 1].result}
                         </h1>
                     </div>
                     <div>
-                        {props.testCases[selectedCase].stdout}
+                        {props.testCases[selectedCase - 1].stdout}
                     </div>
 
                 </div>

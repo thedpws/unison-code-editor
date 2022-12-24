@@ -26,6 +26,8 @@ const Panels = (props) => {
         <Output
           testCases={props.testCases}
           submitCodeHandler={props.submitCodeHandler}
+          getMockTestResults={props.getMockTestResults}
+
           />
       </div>
     </Split>
