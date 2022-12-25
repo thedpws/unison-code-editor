@@ -24,6 +24,7 @@ function App() {
     "example 4",
   ]);
   const [currentLanguage, setCurrentLanguage] = useState('java')
+  const [editorTheme, setEditorTheme] = useState('Dark Mode')
   // Edward's local mock postman server
   var testServer = "https://b7892dbe-8db6-4ff4-9fe4-7b3bc05cab60.mock.pstmn.io";
 
@@ -120,6 +121,8 @@ function App() {
       <Header
         currentLanguage={currentLanguage}
         setCurrentLanguage={setCurrentLanguage}
+        editorTheme={editorTheme}
+        setEditorTheme={setEditorTheme}
       />
       <Panels
         currentLanguage={currentLanguage}
@@ -129,6 +132,7 @@ function App() {
         testCases={testCases}
         submitCodeHandler={submitCodeHandler}
         getMockTestResults={getMockTestResults}
+        editorTheme={editorTheme}
       />
     </div>
   );

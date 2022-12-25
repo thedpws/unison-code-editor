@@ -2,6 +2,7 @@ import { useState } from "react";
 import TestCase from "./TestCase";
 import TestCaseContainer from "./TestCaseContainer";
 import { AiFillPlayCircle } from "react-icons/ai";
+import {BsCheckCircleFill} from 'react-icons/bs';
 
 const Output = (props) => {
   console.log(props.testCases)
@@ -15,7 +16,12 @@ const Output = (props) => {
             className="bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded"
             onClick={props.submitCodeHandler}
           >
-            Run Code
+            <div className="flex items-center gap-2 ">
+              <div>
+                Run
+              </div>
+              <AiFillPlayCircle />
+            </div>
           </button>
         </div>
         <div className='col-start-8'>
@@ -28,7 +34,7 @@ const Output = (props) => {
               <div>
                 Submit
               </div>
-              <AiFillPlayCircle />
+              <BsCheckCircleFill />
             </div>
           </button>
         </div>

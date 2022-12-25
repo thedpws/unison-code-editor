@@ -29,7 +29,10 @@ const TestCaseContainer = (props) => {
                         </h1>
                     </div>
                     <div>
-                        {props.testCases[selectedCase - 1].stdout}
+                        {"stdin: " + props.testCases[selectedCase - 1].stdin}
+                    </div>
+                    <div>
+                        {"stdout: " + props.testCases[selectedCase - 1].stdout}
                     </div>
 
                 </div>

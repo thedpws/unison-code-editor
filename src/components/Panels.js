@@ -22,6 +22,7 @@ const Panels = (props) => {
           <Editor
             setEditorValue={props.setEditorValue}
             currentLanguage={props.currentLanguage}
+            editorTheme={props.editorTheme}
             />
         </div>
       </Split>

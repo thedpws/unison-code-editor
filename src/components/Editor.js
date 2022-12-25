@@ -9,6 +9,7 @@ import 'ace-builds/src-noconflict/ext-language_tools'
 
 
 const Editor = (props) => {
+  const themes = {'Dark Mode': 'twilight', 'Light Mode': 'textmate', 'Blue Tone': 'solarized_dark'}
 
   return (
     <AceEditor
@@ -16,7 +17,7 @@ const Editor = (props) => {
       width='100%'
       height='100%'
       mode={props.currentLanguage}
-      theme='twilight'
+      theme={themes[props.editorTheme]}
       name='editor1'
       onChange={(value) => {
         props.setEditorValue(value)
