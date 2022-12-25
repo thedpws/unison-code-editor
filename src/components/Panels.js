@@ -19,7 +19,10 @@ const Panels = (props) => {
           <Instructions text={props.instructions} examples={props.examples} />
         </div>
         <div className="bg-gray-300">
-          <Editor setEditorValue={props.setEditorValue} />
+          <Editor
+            setEditorValue={props.setEditorValue}
+            currentLanguage={props.currentLanguage}
+            />
         </div>
       </Split>
       <div className="bg-gray-400 flex">

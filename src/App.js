@@ -21,6 +21,7 @@ function App() {
     "example 3",
     "example 4",
   ]);
+  const [currentLanguage, setCurrentLanguage] = useState('java')
   // Edward's local mock postman server
   var testServer = "https://b7892dbe-8db6-4ff4-9fe4-7b3bc05cab60.mock.pstmn.io";
 
@@ -111,10 +112,15 @@ function App() {
 
   useEffect(() => getInstructions(), []);
   console.log(testcases)
+  console.log(currentLanguage)
   return (
     <div className="App">
-      <Header/>
+      <Header
+        currentLanguage={currentLanguage}
+        setCurrentLanguage={setCurrentLanguage}
+      />
       <Panels
+        currentLanguage={currentLanguage}
         setEditorValue={setEditorValue}
         instructions={instructionText}
         examples={examples}

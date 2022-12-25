@@ -6,13 +6,16 @@ import 'ace-builds/src-noconflict/theme-twilight'
 import 'ace-builds/src-noconflict/theme-solarized_dark'
 import 'ace-builds/src-noconflict/ext-language_tools'
 
+
+
 const Editor = (props) => {
+
   return (
     <AceEditor
       placeholder='Insert Code Here'
       width='100%'
       height='100%'
-      mode='java'
+      mode={props.currentLanguage}
       theme='twilight'
       name='editor1'
       onChange={(value) => {
