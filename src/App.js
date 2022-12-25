@@ -1,3 +1,5 @@
+// Using Tailwind CSS, Headless UI, ReactIcons
+
 import { useState, useEffect } from "react";
 
 import Editor from "./components/Editor";
