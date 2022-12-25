@@ -31,7 +31,7 @@ const TestCaseContainer = (props) => {
                     <div>
                         {"stdin: " + props.testCases[selectedCase - 1].stdin}
                     </div>
-                    <div>
+                    <div className='font-sans text-base'>
                         {"stdout: " + props.testCases[selectedCase - 1].stdout}
                     </div>
 
