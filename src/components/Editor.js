@@ -23,6 +23,10 @@ const Editor = (props) => {
         props.setEditorValue(value)
       }}
       wrapEnabled={true}
+      onLoad={(editorInstance) => {
+        editorInstance.container.style.resize = "both";
+        document.addEventListener("mouseup", () => editorInstance.resize());
+      }}
       fontSize={14}
       showPrintMargin={false}
       showGutter={true}
