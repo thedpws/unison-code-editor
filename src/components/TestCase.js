@@ -5,7 +5,7 @@ const TestCase = (props) => {
 
   return (
     // <div className="relative m-6 flex flex-col">
-    <div className='flex my-2' style={{ overflow: 'hidden', whiteSpace: "nowrap" }}>
+    <div className='flex-auto my-2' style={{ overflow: 'hidden', whiteSpace: "nowrap" }}>
       {/* <div className="text-lg font-semibold font-sans text-left">
       </div> */}
 

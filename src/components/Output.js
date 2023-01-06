@@ -8,7 +8,7 @@ const Output = (props) => {
   console.log(props.testCases)
   return (
     <div className="relative m-6 flex flex-col" style={{ width: '100%' }}>
-      <div className='grid grid-cols-8 gap-4'>
+      <div className='flex-1 grid grid-cols-8 gap-4'>
         <div className="text-lg font-semibold font-sans text-left">Output</div>
         <div className='col-start-7'>
           <button
@@ -41,7 +41,7 @@ const Output = (props) => {
       </div>
       {/* To put the scroll bar on the right */}
       {/* <div className='mt-4 flex-1 overscroll-y-auto overflow-auto'> */}
-      <div className='mt-4 flex overscroll-y-auto overflow-auto'>
+      <div className='mt-4 flex overscroll-y-auto overflow-auto' >
         <TestCaseContainer testCases={props.testCases} />
       </div>
     </div>
