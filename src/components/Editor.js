@@ -10,7 +10,11 @@ import 'ace-builds/src-noconflict/ext-language_tools'
 
 const Editor = (props) => {
   const themes = {'Dark Mode': 'twilight', 'Light Mode': 'textmate', 'Blue Tone': 'solarized_dark'}
-
+  const placeholders = {
+    'java': `public static void main(String[] args){
+    System.out.println("hello world");
+  }`,
+    'python': `print('hello world')`}
   return (
     <AceEditor
       placeholder='Insert Code Here'
@@ -31,9 +35,7 @@ const Editor = (props) => {
       showPrintMargin={false}
       showGutter={true}
       highlightActiveLine={true}
-      defaultValue={`public static void main(String[] args){
-  System.out.println("hello world");
-}`}
+      defaultValue={placeholders[props.currentLanguage]}
       setOptions={{
         enableBasicAutocompletion: true,
         enableLiveAutocompletion: true,

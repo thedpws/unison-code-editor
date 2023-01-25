@@ -102,7 +102,6 @@ function App() {
       })
       .then((data) => {
         //console.log('instructions recieved get')
-        console.log(data);
         setInstructionText(data);
         setLoading(false);
         setError(null);
@@ -114,7 +113,6 @@ function App() {
   };
 
   useEffect(() => getInstructions(), []);
-  console.log(testcases)
   console.log(currentLanguage)
   return (
     <div className="App">
