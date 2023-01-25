@@ -3,7 +3,7 @@
 @import 'tailwindcss/utilities';
 
 .gutter {
-  background-color: #e5e7eb;
+  background-color: #5c5c5c;
   background-repeat: no-repeat;
   background-position: 50%;
 }
@@ -16,4 +16,20 @@
 .gutter.gutter-vertical {
   background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAFAQMAAABo7865AAAABlBMVEVHcEzMzMzyAv2sAAAAAXRSTlMAQObYZgAAABBJREFUeF5jOAMEEAIEEFwAn3kMwcB6I2AAAAAASUVORK5CYII=');
   cursor: row-resize;
+}
+
+.bg-gray-300{
+  background-color:#3d3d3d;
+  color: #ffffff;
+}
+
+.bg-blue-500{
+  background-color:#256eff;
+  color: #ffffff;
+}
+
+.bg-gray-400{
+  background-color:#292929;
+  color: #ffffff;
+  font-family: 
 }

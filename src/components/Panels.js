@@ -6,7 +6,7 @@ import Output from "./Output";
 
 const Panels = (props) => {
   const [collapsedIndex, setCollapsedIndex] = useState(null);
-  console.log(props.testCases)
+  console.log(props.testCases);
   return (
     <Split
       collapsed={collapsedIndex}
@@ -23,16 +23,15 @@ const Panels = (props) => {
             setEditorValue={props.setEditorValue}
             currentLanguage={props.currentLanguage}
             editorTheme={props.editorTheme}
-            />
+          />
         </div>
       </Split>
-      <div className="bg-gray-400 flex">
+      <div className="bg-gray-300 flex">
         <Output
           testCases={props.testCases}
           submitCodeHandler={props.submitCodeHandler}
           getMockTestResults={props.getMockTestResults}
-
-          />
+        />
       </div>
     </Split>
   );
