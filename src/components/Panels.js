@@ -6,7 +6,6 @@ import Output from "./Output";
 
 const Panels = (props) => {
   const [collapsedIndex, setCollapsedIndex] = useState(null);
-  console.log(props.testCases);
   return (
     <Split
       collapsed={collapsedIndex}

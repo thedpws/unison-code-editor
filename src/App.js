@@ -153,7 +153,7 @@ function App() {
         setCurrentLanguage={setCurrentLanguage}
         editorTheme={editorTheme}
         setEditorTheme={setEditorTheme}
-        edtitorValue={editorValue}
+        editorValue={editorValue}
         setEditorValue={setEditorValue}
         placeholders={placeholders}
         languageValue={languageValue}

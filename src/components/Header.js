@@ -86,11 +86,9 @@ const Header = (props) => {
                       {({ active }) => (
                         <div
                           onClick={() => {
-                            // const arr = props.languageValue;
-                            // props.setLanguageValue(arr);
-                            // arr[props.currentLanguage] = props.editorValue;
-                            // console.log(props.currentLanguage)
-                            // console.log(props.editorValue)  
+                            const arr = props.languageValue;
+                            props.setLanguageValue(arr);
+                            arr[props.currentLanguage] = props.editorValue;
                             props.setCurrentLanguage(language);
                             props.setEditorValue(props.languageValue[language]);
                           }}

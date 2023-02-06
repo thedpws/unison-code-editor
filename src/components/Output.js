@@ -8,7 +8,6 @@ import {BsCheckCircleFill} from 'react-icons/bs';
 // https://headlessui.com/react/menu
 
 const Output = (props) => {
-  console.log(props.testCases)
   return (
     <div className="relative m-6 flex flex-col" style={{ width: '100%' }}>
       <div className='grid grid-cols-8 gap-4'>
