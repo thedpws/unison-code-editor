@@ -18,6 +18,10 @@
   cursor: row-resize;
 }
 
+.bg-white{
+  color: black;
+}
+
 .bg-gray-300{
   background-color:#3d3d3d;
   color: #ffffff;

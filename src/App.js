@@ -22,25 +22,25 @@ function App() {
     "example 3",
     "example 4",
   ]);
-  const [currentLanguage, setCurrentLanguage] = useState('java')
-  const [editorTheme, setEditorTheme] = useState('Dark Mode')
+  const [currentLanguage, setCurrentLanguage] = useState("java");
+  const [editorTheme, setEditorTheme] = useState("Dark Mode");
+  const [theme, setTheme] = useState("dark");
   const [output, setOutput] = useState("");
   const placeholders = {
-    'java': `public static void main(String[] args){
+    java: `public static void main(String[] args){
     System.out.println("hello world");
   }`,
-    'python': `print('hello world')`, 
-    'javascript': `console.log('hello world')`,
-    'mysql': `SELET * FROM TABLE1`}
+    python: `print('hello world')`,
+    javascript: `console.log('hello world')`,
+    mysql: `SELET * FROM TABLE1`,
+  };
   const [editorValue, setEditorValue] = useState(placeholders[currentLanguage]);
-  const [languageValue, setLanguageValue] = useState(
-    {
-      'java': placeholders['java'],
-      'python': placeholders['python'],
-      'javascript': placeholders['javascript'],
-      'mysql': placeholders['mysql']
-    }
-  )
+  const [languageValue, setLanguageValue] = useState({
+    java: placeholders["java"],
+    python: placeholders["python"],
+    javascript: placeholders["javascript"],
+    mysql: placeholders["mysql"],
+  });
 
   // Edward's local mock postman server
   var testServer = "https://b7892dbe-8db6-4ff4-9fe4-7b3bc05cab60.mock.pstmn.io";
@@ -48,18 +48,19 @@ function App() {
   const submitCodeHandler = () => {
     console.log(editorValue);
     (async () => {
-      const functionCaller = 
-      `\nfunc()`;
+      const functionCaller = `\nfunc()`;
 
       const client = piston({ server: "https://emkc.org" });
       const runtimes = await client.runtimes();
-      console.log(editorValue + functionCaller)
+      console.log(editorValue + functionCaller);
 
-      const result = await client.execute(currentLanguage, editorValue+functionCaller);
-      console.log(result)
-      setOutput(result['run']['stdout'])
-  
-  })();
+      const result = await client.execute(
+        currentLanguage,
+        editorValue + functionCaller
+      );
+      console.log(result);
+      setOutput(result["run"]["stdout"]);
+    })();
     // if (value) {
     //   const newComment = {
     //     createdBy: "edtest",
@@ -87,7 +88,6 @@ function App() {
     //       setError("Something went wrong, please try again later.");
     //     });
     // }
-
   };
 
   const getTestResults = () => {
@@ -145,14 +145,18 @@ function App() {
 
   useEffect(() => getInstructions(), []);
 
-  
+  useEffect(() => {
+    document.body.className = theme;
+  }, [theme]);
+
   return (
-    <div className="App">
+    <div className={`App ${theme}`}>
       <Header
         currentLanguage={currentLanguage}
         setCurrentLanguage={setCurrentLanguage}
         editorTheme={editorTheme}
         setEditorTheme={setEditorTheme}
+        setTheme={setTheme}
         editorValue={editorValue}
         setEditorValue={setEditorValue}
         placeholders={placeholders}

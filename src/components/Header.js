@@ -13,7 +13,7 @@ const Header = (props) => {
   const languages = ["java", "javascript", "python", "mysql"];
   const themes = ["Dark Mode", "Light Mode", "Blue Tone"];
   return (
-    <div className="bg-gray-400 flow-root items-center">
+    <div className="bg-neutral-200 text-black dark:bg-zinc-900 dark:text-gray-200 flow-root items-center">
       <div className="float-left ml-4 my-4 font-sans text-2xl font-bold">
         Unison Live Code Editor
       </div>
@@ -44,18 +44,20 @@ const Header = (props) => {
                     <button>
                       <div
                         className={classNames(
-                          active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                          active
+                            ? "bg-gray-100 text-gray-900"
+                            : "text-gray-700",
                           "block px-4 py-2 text-sm"
-                        )
-                        }
+                        )}
                         onClick={() => {
-                          props.setEditorValue(props.placeholders[props.currentLanguage])
+                          props.setEditorValue(
+                            props.placeholders[props.currentLanguage]
+                          );
                         }}
                       >
                         Reset Code
                       </div>
                     </button>
-
                   )}
                 </Menu.Item>
               </div>
@@ -146,6 +148,12 @@ const Header = (props) => {
                       {({ active }) => (
                         <div
                           onClick={() => {
+                            let themeDict = {
+                              "Dark Mode": "dark",
+                              "Light Mode": "light",
+                              "Blue Tone": "blue",
+                            };
+                            props.setTheme(themeDict[theme]);
                             props.setEditorTheme(theme);
                           }}
                           className={classNames(
