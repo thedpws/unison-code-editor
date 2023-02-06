@@ -41,18 +41,21 @@ const Header = (props) => {
               <div className="py-1">
                 <Menu.Item>
                   {({ active }) => (
-                    <div
-                      className={classNames(
-                        active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                        "block px-4 py-2 text-sm"
-                      )
-                    }
-                    onClick={() => {
-                      props.setEditorValue(props.placeholders[props.currentLanguage])
-                    }}
-                    >
-                      Reset Code
-                    </div>
+                    <button>
+                      <div
+                        className={classNames(
+                          active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                          "block px-4 py-2 text-sm"
+                        )
+                        }
+                        onClick={() => {
+                          props.setEditorValue(props.placeholders[props.currentLanguage])
+                        }}
+                      >
+                        Reset Code
+                      </div>
+                    </button>
+
                   )}
                 </Menu.Item>
               </div>
