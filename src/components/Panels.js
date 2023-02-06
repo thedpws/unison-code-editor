@@ -16,13 +16,14 @@ const Panels = (props) => {
     >
       <Split className="flex">
         <div className="bg-gray-300">
-          <Instructions text={props.instructions} examples={props.examples} />
+          <Instructions output = {props.output} text={props.instructions} examples={props.examples} />
         </div>
         <div className="bg-gray-300">
           <Editor
             setEditorValue={props.setEditorValue}
             currentLanguage={props.currentLanguage}
             editorTheme={props.editorTheme}
+            editorValue={props.editorValue}
           />
         </div>
       </Split>

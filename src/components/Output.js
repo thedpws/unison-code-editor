@@ -13,6 +13,7 @@ const Output = (props) => {
     <div className="relative m-6 flex flex-col" style={{ width: '100%' }}>
       <div className='grid grid-cols-8 gap-4'>
         <div className="text-lg font-semibold font-sans text-left">Output</div>
+        
         <div className='col-start-7'>
           <button
             type="button"

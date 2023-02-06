@@ -9,14 +9,13 @@ import Panels from "./components/Panels";
 import "./styles/styles.css";
 import { AiFillPlayCircle } from "react-icons/ai";
 import Header from "./components/Header";
+import piston from "piston-client";
 
 function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [value, setValue] = useState("hello world");
   const [instructionText, setInstructionText] = useState("Enter Instructions");
   const [testCases, setTestCases] = useState();
-  const [editorValue, setEditorValue] = useState("");
   const [examples, setExamples] = useState([
     "example 1",
     "example 2",
@@ -25,38 +24,70 @@ function App() {
   ]);
   const [currentLanguage, setCurrentLanguage] = useState('java')
   const [editorTheme, setEditorTheme] = useState('Dark Mode')
+  const [output, setOutput] = useState("");
+  const placeholders = {
+    'java': `public static void main(String[] args){
+    System.out.println("hello world");
+  }`,
+    'python': `print('hello world')`, 
+    'javascript': `console.log('hello world')`,
+    'mysql': `SELET * FROM TABLE1`}
+  const [editorValue, setEditorValue] = useState(placeholders[currentLanguage]);
+  const [languageValue, setLanguageValue] = useState(
+    {
+      'java': placeholders['java'],
+      'python': placeholders['python'],
+      'javascript': placeholders['javascript'],
+      'mysql': placeholders['mysql']
+    }
+  )
+
   // Edward's local mock postman server
   var testServer = "https://b7892dbe-8db6-4ff4-9fe4-7b3bc05cab60.mock.pstmn.io";
 
   const submitCodeHandler = () => {
     console.log(editorValue);
-    if (value) {
-      const newComment = {
-        createdBy: "edtest",
-        description: editorValue,
-        userId: 1,
-      };
-      fetch(testServer + "/submit", {
-        method: "POST",
-        headers: new Headers({
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        }),
-        body: JSON.stringify(newComment),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("Data recieved post");
-          console.log(data);
-          setTestCases(data);
-          setLoading(false);
-          setError(null);
-        })
-        .catch((error) => {
-          setLoading(false);
-          setError("Something went wrong, please try again later.");
-        });
-    }
+    (async () => {
+      const functionCaller = 
+      `\nfunc()`;
+
+      const client = piston({ server: "https://emkc.org" });
+      const runtimes = await client.runtimes();
+      console.log(editorValue + functionCaller)
+
+      const result = await client.execute(currentLanguage, editorValue+functionCaller);
+      console.log(result)
+      setOutput(result['run']['stdout'])
+  
+  })();
+    // if (value) {
+    //   const newComment = {
+    //     createdBy: "edtest",
+    //     description: editorValue,
+    //     userId: 1,
+    //   };
+    //   fetch(testServer + "/submit", {
+    //     method: "POST",
+    //     headers: new Headers({
+    //       Accept: "application/json",
+    //       "Content-Type": "application/json",
+    //     }),
+    //     body: JSON.stringify(newComment),
+    //   })
+    //     .then((response) => response.json())
+    //     .then((data) => {
+    //       console.log("Data recieved post");
+    //       console.log(data);
+    //       setTestCases(data);
+    //       setLoading(false);
+    //       setError(null);
+    //     })
+    //     .catch((error) => {
+    //       setLoading(false);
+    //       setError("Something went wrong, please try again later.");
+    //     });
+    // }
+
   };
 
   const getTestResults = () => {
@@ -113,7 +144,8 @@ function App() {
   };
 
   useEffect(() => getInstructions(), []);
-  console.log(currentLanguage)
+
+  
   return (
     <div className="App">
       <Header
@@ -121,9 +153,15 @@ function App() {
         setCurrentLanguage={setCurrentLanguage}
         editorTheme={editorTheme}
         setEditorTheme={setEditorTheme}
+        edtitorValue={editorValue}
+        setEditorValue={setEditorValue}
+        placeholders={placeholders}
+        languageValue={languageValue}
+        setLanguageValue={setLanguageValue}
       />
       <Panels
         currentLanguage={currentLanguage}
+        editorValue={editorValue}
         setEditorValue={setEditorValue}
         instructions={instructionText}
         examples={examples}
@@ -131,6 +169,7 @@ function App() {
         submitCodeHandler={submitCodeHandler}
         getMockTestResults={getMockTestResults}
         editorTheme={editorTheme}
+        output={output}
       />
     </div>
   );

@@ -26,6 +26,7 @@ const Editor = (props) => {
       onChange={(value) => {
         props.setEditorValue(value)
       }}
+      value={props.editorValue}
       wrapEnabled={true}
       onLoad={(editorInstance) => {
         editorInstance.container.style.resize = "both";
