@@ -21,9 +21,6 @@ const Instructions = (props) => {
         <div className="mt-3 p-2 flex-1 overscroll-y-auto overflow-auto bg-neutral-200 text-black dark:bg-zinc-900 dark:text-gray-200">
           Output Format
         </div>
-        <div className="mt-3 p-2 flex-1 overscroll-y-auto overflow-auto bg-neutral-200 text-black dark:bg-zinc-900 dark:text-gray-200">
-          {props.output}
-        </div>
       </div>
     </div>
   );

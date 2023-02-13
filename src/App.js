@@ -59,7 +59,11 @@ function App() {
         editorValue + functionCaller
       );
       console.log(result);
-      setOutput(result["run"]["stdout"]);
+      setOutput(result["run"]);
+      testcases[0]["stdout"] = result["run"]["stdout"];
+      console.log(result["run"]["stdout"]);
+      console.log(testcases[1]["stdout"]);
+      setTestCases(testcases);
     })();
     // if (value) {
     //   const newComment = {

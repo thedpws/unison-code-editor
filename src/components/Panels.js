@@ -14,12 +14,8 @@ const Panels = (props) => {
       style={{ height: `calc(100vh - 4rem)` }}
     >
       <Split className="flex">
-        <div className="bg-white dark:bg-zinc-800 dark:text-gray-200">
-          <Instructions
-            output={props.output}
-            text={props.instructions}
-            examples={props.examples}
-          />
+        <div className="bg-white dark:bg-zinc-800 dark:text-gray-200 ">
+          <Instructions text={props.instructions} examples={props.examples} />
         </div>
         <div className="bg-white dark:bg-zinc-800 dark:text-gray-200">
           <Editor
@@ -33,6 +29,7 @@ const Panels = (props) => {
       <div className="bg-white dark:bg-zinc-800 dark:text-gray-200 flex">
         <Output
           testCases={props.testCases}
+          output={props.output}
           submitCodeHandler={props.submitCodeHandler}
           getMockTestResults={props.getMockTestResults}
         />
