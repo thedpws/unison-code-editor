@@ -14,13 +14,12 @@ import piston from "piston-client";
 function App() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [instructionText, setInstructionText] = useState("Enter Instructions");
+  const [instructionText, setInstructionText] = useState("Make a function that adds two integers");
   const [testCases, setTestCases] = useState();
   const [examples, setExamples] = useState([
-    "example 1",
-    "example 2",
-    "example 3",
-    "example 4",
+    "stdin: func(1+2)",
+    "stout: 3",
+
   ]);
   const [currentLanguage, setCurrentLanguage] = useState("java");
   const [editorTheme, setEditorTheme] = useState("Dark Mode");
@@ -48,21 +47,29 @@ function App() {
   const submitCodeHandler = () => {
     console.log(editorValue);
     (async () => {
-      const functionCaller = `\nfunc()`;
-
+      const functionCaller = `\nfunc(2,3)\nfunc(2,4)\nfunc(4,3)\nfunc(5,3)\nfunc(100,3)`;
+      const input = ['func(2,3)', 'func(2,4)', 'func(4,3)', 'func(5,3)', 'func(100,3)']
+      const answerKey = ['5', '6', '7', '8', '103']
       const client = piston({ server: "https://emkc.org" });
-      const runtimes = await client.runtimes();
-      console.log(editorValue + functionCaller);
 
       const result = await client.execute(
         currentLanguage,
         editorValue + functionCaller
       );
-      console.log(result);
+
+      var results = result['run']['stdout'].split("\n");
+  
       setOutput(result["run"]);
-      testcases[0]["stdout"] = result["run"]["stdout"];
-      console.log(result["run"]["stdout"]);
-      console.log(testcases[1]["stdout"]);
+      for (var i = 0; i < results.length - 1; i++){
+        testcases[i]["stdout"] = results[i];
+        testcases[i]["stdin"] = input[i];
+        if(results[i] == answerKey[i]){
+          testcases[i]['result'] = "Pass"
+        }
+        else{
+          testcases[i]['result'] = "Fail"
+        }
+      }
       setTestCases(testcases);
     })();
     // if (value) {
@@ -116,14 +123,11 @@ function App() {
   };
 
   const testcases = [
-    { key: 1, number: 1, result: "Pass", stdout: "" },
-    { key: 2, number: 2, result: "Fail", stdout: "Segmentation Fault" },
-    { key: 3, number: 3, result: "Pass", stdout: "" },
-    { key: 4, number: 4, result: "Pass", stdout: "" },
-    { key: 5, number: 5, result: "Pass", stdout: "" },
-    { key: 6, number: 6, result: "Fail", stdout: "Segmentation Fault" },
-    { key: 7, number: 7, result: "Pass", stdout: "" },
-    { key: 8, number: 8, result: "Pass", stdout: "" },
+    { key: 1, number: 1, result: "Pass", stdin: "", stdout: "" },
+    { key: 2, number: 2, result: "Fail", stdin: "", stdout: "Segmentation Fault" },
+    { key: 3, number: 3, result: "Pass", stdin: "",  stdout: "" },
+    { key: 4, number: 4, result: "Pass",  stdin: "", stdout: "" },
+    { key: 5, number: 5, result: "Pass",  stdin: "", stdout: "" },
   ];
   const getMockTestResults = () => {
     setTestCases(testcases);
