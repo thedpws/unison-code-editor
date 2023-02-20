@@ -1,5 +1,9 @@
 import TestCase from "./TestCase";
 import { useState } from "react";
+
+import OutputEditor from "./OutputEditor";
+import Output from "./Output";
+
 const TestCaseContainer = (props) => {
     const [selectedCase, setSelectedCase] = useState(1);
     return props.testCases ? (
@@ -23,18 +27,27 @@ const TestCaseContainer = (props) => {
                     </div>
                 </div>
                 <div className='col-span-7 bg-gray-500'>
-                    <div>
-                        <h1 className='text-xl font-bold'>
-                            {"Test Case " + selectedCase + ": " + props.testCases[selectedCase - 1].result}
-                        </h1>
+                    <p className="text-lg text-gray-900 dark:text-white" style={{ border: '1px solid black'}}>
+                        {"Test Case " + props.testCases[selectedCase - 1].key}
+                    </p>
+                    <div style={{ border: '1px solid black', textAlign: 'left', padding: '15px' }}>
+                        <p className="text-base text-gray-900 dark:text-white">
+                            Input (stdin)
+                        </p>
+                        <OutputEditor defaultVal={props.testCases[selectedCase - 1].stdin} />
                     </div>
-                    <div>
-                        {"stdin: " + props.testCases[selectedCase - 1].stdin}
+                    <div style={{ border: '1px solid black', textAlign: 'left', padding: '15px' }}>
+                        <p className="text-base text-gray-900 dark:text-white">
+                            Output (stdout)
+                        </p>
+                        <OutputEditor defaultVal={props.testCases[selectedCase - 1].stdout} />
                     </div>
-                    <div className='font-sans text-base'>
-                        {"stdout: " + props.testCases[selectedCase - 1].stdout}
+                    <div style={{ border: '1px solid black', textAlign: 'left', padding: '15px' }}>
+                        <p className="text-base text-gray-900 dark:text-white">
+                            Expected Output
+                        </p>
+                        <OutputEditor defaultVal={props.testCases[selectedCase - 1].stdout} />
                     </div>
-
                 </div>
             </div>
         </div>

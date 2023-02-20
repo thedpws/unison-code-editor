@@ -28,7 +28,7 @@ const Output = (props) => {
           <button
             type="button"
             className="bg-blue-500 hover:bg-blue-700 text-white text-sm font-bold py-2 px-4 rounded"
-            onClick={props.getMockTestResults}
+            onClick={props.submitCodeHandler}
           >
             <div className="flex items-center gap-2 ">
               <div>Submit</div>
@@ -40,7 +40,7 @@ const Output = (props) => {
       {/* To put the scroll bar on the right */}
       {/* <div className='mt-4 flex-1 overscroll-y-auto overflow-auto'> */}
       <div className="mt-4 flex overscroll-y-auto overflow-auto">
-        <TestCaseContainer testCases={props.testCases} output={props.output} />
+        <TestCaseContainer testCases={props.testCases} />
       </div>
     </div>
   );

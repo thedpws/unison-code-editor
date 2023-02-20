@@ -29,7 +29,6 @@ const Panels = (props) => {
       <div className="bg-white dark:bg-zinc-800 dark:text-gray-200 flex">
         <Output
           testCases={props.testCases}
-          output={props.output}
           submitCodeHandler={props.submitCodeHandler}
           getMockTestResults={props.getMockTestResults}
         />
