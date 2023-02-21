@@ -131,26 +131,6 @@ function App() {
       setTestCases(testcases);
     })();
   };
-
-  const getTestCaseAnswers = () => {
-    (async () => {
-      fetch(raw)
-      .then(r => r.text())
-      .then(text => {
-        console.log(text)
-        setCorrectFunction(text)
-      })
-      const functionCaller = `\nadding_answer(2,3)\nadding_answer(2,4)\nadding_answer(4,3)\nadding_answer(5,3)\nadding_answer(100,3)`;
-      const input = ['2 3', '2 4', '4 3', '5 3', '100 3']
-      const client = piston({ server: "https://emkc.org" });
-      console.log(correctFunction + functionCaller)
-      const result = await client.execute(
-        currentLanguage,
-        correctFunction + functionCaller
-      );
-      var results = result['run']['stdout'].split("\n");
-      console.log(results)
-    })();
   const getAnswer = () => {
     fetch(raw)
       .then((r) => r.text())
@@ -159,7 +139,7 @@ function App() {
       });
   };
 
-  useEffect(() => getTestCaseAnswers(), []);
+  useEffect(() => getAnswer(), []);
   useEffect(() => {
     document.body.className = theme;
   }, [theme]);
