@@ -10,7 +10,7 @@ function classNames(...classes) {
 }
 
 const Header = (props) => {
-  const languages = ["java", "javascript", "python", "mysql"];
+  const languages = ["java", "javascript", "mysql", "python"];
   const themes = ["Dark Mode", "Light Mode", "Blue Tone"];
   return (
     <div className="bg-neutral-200 text-black dark:bg-zinc-900 dark:text-gray-200 flow-root items-center">

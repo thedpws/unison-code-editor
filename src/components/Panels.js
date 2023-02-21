@@ -10,7 +10,7 @@ const Panels = (props) => {
     <Split
       collapsed={collapsedIndex}
       direction="vertical"
-      sizes={[60, 40]}
+      sizes={[80, 20]}
       style={{ height: `calc(100vh - 4rem)` }}
     >
       <Split className="flex">
@@ -30,7 +30,7 @@ const Panels = (props) => {
         <Output
           testCases={props.testCases}
           submitCodeHandler={props.submitCodeHandler}
-          getMockTestResults={props.getMockTestResults}
+          testCodeHandler={props.testCodeHandler}
         />
       </div>
     </Split>

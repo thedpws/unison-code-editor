@@ -21,7 +21,7 @@ function App() {
     "stdin: func(1+2)",
     "stout: 3",
   ]);
-  const [currentLanguage, setCurrentLanguage] = useState("java");
+  const [currentLanguage, setCurrentLanguage] = useState("python");
   const [editorTheme, setEditorTheme] = useState("Dark Mode");
   const [theme, setTheme] = useState("dark");
   const placeholders = {
@@ -40,11 +40,11 @@ function App() {
     mysql: placeholders["mysql"],
   });
   const [correctFunction, setCorrectFunction] = useState('')
-
+  const [testCaseAnswers, setTestCaseAnswers] = useState(['no function'])
   // Edward's local mock postman server
   var testServer = "https://b7892dbe-8db6-4ff4-9fe4-7b3bc05cab60.mock.pstmn.io";
 
-  const submitCodeHandler = () => {
+  const testCodeHandler = () => {
     console.log(editorValue);
     (async () => {
       const functionCaller = `\nadding(2,3)\nadding_answer(2,3)\nadding(2,4)\nadding_answer(2,4)\nadding(4,3)\nadding_answer(4,3)\nadding(5,3)\nadding_answer(5,3)\nadding(100,3)\nadding_answer(100,3)`;
@@ -63,14 +63,14 @@ function App() {
 
       console.log(results)
       var j = 0;
-      for (var i = 0; i < results.length - 1; i+=2) {
-        var testcase = { key: 1, number: 1, result: "Fail", stdin: "code", stdout: "", stdout_expected:""};
+      for (var i = 0; i < results.length - 1; i += 2) {
+        var testcase = { key: 1, number: 1, result: "Fail", stdin: "code", stdout: "", stdout_expected: "" };
         testcase.key = j + 1;
         testcase.number = j + 1;
         testcase["stdout"] = results[i];
-        testcase["stdout_expected"] = results[i+1]
+        testcase["stdout_expected"] = results[i + 1]
         testcase["stdin"] = input[j];
-        if (results[i] == results[i+1]) {
+        if (results[i] == results[i + 1]) {
           testcase['result'] = "Pass"
         }
         else {
@@ -84,15 +84,68 @@ function App() {
     })();
   };
 
-  const getAnswer = () => {
-    fetch(raw)
+  const submitCodeHandler = () => {
+    console.log(editorValue);
+    (async () => {
+      const functionCaller = `\nadding(100,-3)\nadding_answer(100,-3)\nadding(0,4)\nadding_answer(0,4)\nadding(123941, -4)\nadding_answer(123941, -4)\nadding(1243, 3124)\nadding_answer(1243, 3124)`;
+      const input = ['100 -3', '0 4', '123941 -4', '1243 3124']
+      const client = piston({ server: "https://emkc.org" });
+      console.log(editorValue + correctFunction + functionCaller)
+      const result = await client.execute(
+        currentLanguage,
+        editorValue + correctFunction + functionCaller
+      );
+      console.log(result)
+
+      var results = result['run']['stdout'].split("\n");
+
+      var testcases = []
+
+      console.log(results)
+      var j = 0;
+      for (var i = 0; i < results.length - 1; i += 2) {
+        var testcase = { key: 1, number: 1, result: "Fail", stdin: "code", stdout: "", stdout_expected: "" };
+        testcase.key = j + 1;
+        testcase.number = j + 1;
+        testcase["stdout"] = results[i];
+        testcase["stdout_expected"] = "Hidden Test Case"
+        testcase["stdin"] = "Hidden Test Case";
+        if (results[i] == results[i + 1]) {
+          testcase['result'] = "Pass"
+        }
+        else {
+          testcase['result'] = "Fail"
+        }
+        testcases[j] = testcase
+        j++;
+      }
+      console.log(testcases)
+      setTestCases(testcases);
+    })();
+  };
+
+  const getTestCaseAnswers = () => {
+    (async () => {
+      fetch(raw)
       .then(r => r.text())
       .then(text => {
+        console.log(text)
         setCorrectFunction(text)
-      });
-  }
+      })
+      const functionCaller = `\nadding_answer(2,3)\nadding_answer(2,4)\nadding_answer(4,3)\nadding_answer(5,3)\nadding_answer(100,3)`;
+      const input = ['2 3', '2 4', '4 3', '5 3', '100 3']
+      const client = piston({ server: "https://emkc.org" });
+      console.log(correctFunction + functionCaller)
+      const result = await client.execute(
+        currentLanguage,
+        correctFunction + functionCaller
+      );
+      var results = result['run']['stdout'].split("\n");
+      console.log(results)
+    })();
+  };
 
-  useEffect(() => getAnswer(), []);
+  useEffect(() => getTestCaseAnswers(), []);
   useEffect(() => {
     document.body.className = theme;
   }, [theme]);
@@ -119,6 +172,7 @@ function App() {
         examples={examples}
         testCases={testCases}
         submitCodeHandler={submitCodeHandler}
+        testCodeHandler={testCodeHandler}
         editorTheme={editorTheme}
       />
     </div>

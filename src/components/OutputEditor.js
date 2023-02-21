@@ -13,7 +13,7 @@ const OutputEditor = (props) => {
     return (
 
         <AceEditor
-            fontSize={16}
+            fontSize={17}
             maxLines={Infinity}
             theme='twilight'
             width='100%'

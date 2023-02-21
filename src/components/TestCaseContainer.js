@@ -27,8 +27,8 @@ const TestCaseContainer = (props) => {
                     </div>
                 </div>
                 <div className='col-span-7 bg-gray-500'>
-                    <p className="text-lg text-gray-900 dark:text-white" style={{ border: '1px solid black'}}>
-                        {"Test Case " + props.testCases[selectedCase - 1].key}
+                    <p className="text-lg text-gray-900 dark:text-white" style={{ border: '1px solid black', padding: '10px'}}>
+                        {"Test Case " + selectedCase}
                     </p>
                     <div style={{ border: '1px solid black', textAlign: 'left', padding: '15px' }}>
                         <p className="text-base text-gray-900 dark:text-white">
@@ -46,7 +46,7 @@ const TestCaseContainer = (props) => {
                         <p className="text-base text-gray-900 dark:text-white">
                             Expected Output
                         </p>
-                        <OutputEditor defaultVal={props.testCases[selectedCase - 1].stdout} />
+                        <OutputEditor defaultVal={props.testCases[selectedCase - 1].stdout_expected} />
                     </div>
                 </div>
             </div>
