@@ -10,17 +10,19 @@ import "./styles/styles.css";
 import { AiFillPlayCircle } from "react-icons/ai";
 import Header from "./components/Header";
 import piston from "piston-client";
-import raw from './assets/answer-key.txt';
+import raw from "./assets/answer-key.txt";
 
 function App() {
+  const CANVAS_KEY =
+    "18024~ipMZOtE9ZsV1GYIWdfidcEzigZNQro7XWWNcG1xS30d7JFLh4zOlfNGNm1HbGUCn";
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [instructionText, setInstructionText] = useState("Make a function that adds two integers");
+  const [instructionText, setInstructionText] = useState(
+    "Make a function that adds two integers"
+  );
   const [testCases, setTestCases] = useState();
-  const [examples, setExamples] = useState([
-    "stdin: func(1+2)",
-    "stout: 3",
-  ]);
+  const [examples, setExamples] = useState(["stdin: func(1+2)", "stout: 3"]);
   const [currentLanguage, setCurrentLanguage] = useState("java");
   const [editorTheme, setEditorTheme] = useState("Dark Mode");
   const [theme, setTheme] = useState("dark");
@@ -39,7 +41,7 @@ function App() {
     javascript: placeholders["javascript"],
     mysql: placeholders["mysql"],
   });
-  const [correctFunction, setCorrectFunction] = useState('')
+  const [correctFunction, setCorrectFunction] = useState("");
 
   // Edward's local mock postman server
   var testServer = "https://b7892dbe-8db6-4ff4-9fe4-7b3bc05cab60.mock.pstmn.io";
@@ -48,49 +50,55 @@ function App() {
     console.log(editorValue);
     (async () => {
       const functionCaller = `\nadding(2,3)\nadding_answer(2,3)\nadding(2,4)\nadding_answer(2,4)\nadding(4,3)\nadding_answer(4,3)\nadding(5,3)\nadding_answer(5,3)\nadding(100,3)\nadding_answer(100,3)`;
-      const input = ['2 3', '2 4', '4 3', '5 3', '100 3']
+      const input = ["2 3", "2 4", "4 3", "5 3", "100 3"];
       const client = piston({ server: "https://emkc.org" });
-      console.log(editorValue + correctFunction + functionCaller)
+      console.log(editorValue + correctFunction + functionCaller);
       const result = await client.execute(
         currentLanguage,
         editorValue + correctFunction + functionCaller
       );
-      console.log(result)
+      console.log(result);
 
-      var results = result['run']['stdout'].split("\n");
+      var results = result["run"]["stdout"].split("\n");
 
-      var testcases = []
+      var testcases = [];
 
-      console.log(results)
+      console.log(results);
       var j = 0;
-      for (var i = 0; i < results.length - 1; i+=2) {
-        var testcase = { key: 1, number: 1, result: "Fail", stdin: "code", stdout: "", stdout_expected:""};
+      for (var i = 0; i < results.length - 1; i += 2) {
+        var testcase = {
+          key: 1,
+          number: 1,
+          result: "Fail",
+          stdin: "code",
+          stdout: "",
+          stdout_expected: "",
+        };
         testcase.key = j + 1;
         testcase.number = j + 1;
         testcase["stdout"] = results[i];
-        testcase["stdout_expected"] = results[i+1]
+        testcase["stdout_expected"] = results[i + 1];
         testcase["stdin"] = input[j];
-        if (results[i] == results[i+1]) {
-          testcase['result'] = "Pass"
+        if (results[i] == results[i + 1]) {
+          testcase["result"] = "Pass";
+        } else {
+          testcase["result"] = "Fail";
         }
-        else {
-          testcase['result'] = "Fail"
-        }
-        testcases[j] = testcase
+        testcases[j] = testcase;
         j++;
       }
-      console.log(testcases)
+      console.log(testcases);
       setTestCases(testcases);
     })();
   };
 
   const getAnswer = () => {
     fetch(raw)
-      .then(r => r.text())
-      .then(text => {
-        setCorrectFunction(text)
+      .then((r) => r.text())
+      .then((text) => {
+        setCorrectFunction(text);
       });
-  }
+  };
 
   useEffect(() => getAnswer(), []);
   useEffect(() => {
