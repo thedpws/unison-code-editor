@@ -6,26 +6,37 @@ import 'ace-builds/src-noconflict/theme-twilight'
 import 'ace-builds/src-noconflict/theme-solarized_dark'
 import 'ace-builds/src-noconflict/ext-language_tools'
 
+
+
 const Editor = (props) => {
+  const themes = {'Dark Mode': 'twilight', 'Light Mode': 'textmate', 'Blue Tone': 'solarized_dark'}
+  const placeholders = {
+    'java': `public static void main(String[] args){
+    System.out.println("hello world");
+  }`,
+    'python': `print('hello world')`}
   return (
     <AceEditor
       placeholder='Insert Code Here'
       width='100%'
       height='100%'
-      mode='java'
-      theme='twilight'
+      mode={props.currentLanguage}
+      theme={themes[props.editorTheme]}
       name='editor1'
       onChange={(value) => {
         props.setEditorValue(value)
       }}
+      value={props.editorValue}
       wrapEnabled={true}
+      onLoad={(editorInstance) => {
+        editorInstance.container.style.resize = "both";
+        document.addEventListener("mouseup", () => editorInstance.resize());
+      }}
       fontSize={14}
       showPrintMargin={false}
       showGutter={true}
       highlightActiveLine={true}
-      defaultValue={`public static void main(String[] args){
-  System.out.println("hello world");
-}`}
+      defaultValue={placeholders[props.currentLanguage]}
       setOptions={{
         enableBasicAutocompletion: true,
         enableLiveAutocompletion: true,

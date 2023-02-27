@@ -1,3 +1,5 @@
+// Using Tailwind CSS, Headless UI, ReactIcons
+
 import { useState, useEffect } from "react";
 
 import Editor from "./components/Editor";
@@ -6,135 +8,167 @@ import Split from "react-split";
 import Panels from "./components/Panels";
 import "./styles/styles.css";
 import { AiFillPlayCircle } from "react-icons/ai";
+import Header from "./components/Header";
+import piston from "piston-client";
+import raw from "./assets/answer-key.txt";
 
 function App() {
+  const CANVAS_KEY =
+    "18024~ipMZOtE9ZsV1GYIWdfidcEzigZNQro7XWWNcG1xS30d7JFLh4zOlfNGNm1HbGUCn";
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [value, setValue] = useState("hello world");
-  const [instructionText, setInstructionText] = useState("Enter Instructions");
+  const [instructionText, setInstructionText] = useState(
+    "Make a function that adds two integers"
+  );
   const [testCases, setTestCases] = useState();
-  const [editorValue, setEditorValue] = useState("");
-  const [examples, setExamples] = useState([
-    "example 1",
-    "example 2",
-    "example 3",
-    "example 4",
-  ]);
+  const [examples, setExamples] = useState(["stdin: func(1+2)", "stout: 3"]);
+  const [currentLanguage, setCurrentLanguage] = useState("java");
+  const [editorTheme, setEditorTheme] = useState("Dark Mode");
+  const [theme, setTheme] = useState("dark");
+  const placeholders = {
+    java: `public static void main(String[] args){
+    System.out.println("hello world");
+  }`,
+    python: `print('hello world')`,
+    javascript: `console.log('hello world')`,
+    mysql: `SELET * FROM TABLE1`,
+  };
+  const [editorValue, setEditorValue] = useState(placeholders[currentLanguage]);
+  const [languageValue, setLanguageValue] = useState({
+    java: placeholders["java"],
+    python: placeholders["python"],
+    javascript: placeholders["javascript"],
+    mysql: placeholders["mysql"],
+  });
+  const [correctFunction, setCorrectFunction] = useState('')
+  const [testCaseAnswers, setTestCaseAnswers] = useState(['no function'])
   // Edward's local mock postman server
   var testServer = "https://b7892dbe-8db6-4ff4-9fe4-7b3bc05cab60.mock.pstmn.io";
 
+  const testCodeHandler = () => {
+    console.log(editorValue);
+    (async () => {
+      const functionCaller = `\nadding(2,3)\nadding_answer(2,3)\nadding(2,4)\nadding_answer(2,4)\nadding(4,3)\nadding_answer(4,3)\nadding(5,3)\nadding_answer(5,3)\nadding(100,3)\nadding_answer(100,3)`;
+      const input = ["2 3", "2 4", "4 3", "5 3", "100 3"];
+      const client = piston({ server: "https://emkc.org" });
+      console.log(editorValue + correctFunction + functionCaller);
+      const result = await client.execute(
+        currentLanguage,
+        editorValue + correctFunction + functionCaller
+      );
+      console.log(result);
+
+      var results = result["run"]["stdout"].split("\n");
+
+      var testcases = [];
+
+      console.log(results);
+      var j = 0;
+      for (var i = 0; i < results.length - 1; i += 2) {
+        var testcase = {
+          key: 1,
+          number: 1,
+          result: "Fail",
+          stdin: "code",
+          stdout: "",
+          stdout_expected: "",
+        };
+        testcase.key = j + 1;
+        testcase.number = j + 1;
+        testcase["stdout"] = results[i];
+        testcase["stdout_expected"] = results[i + 1];
+        testcase["stdin"] = input[j];
+        if (results[i] == results[i + 1]) {
+          testcase["result"] = "Pass";
+        } else {
+          testcase["result"] = "Fail";
+        }
+        testcases[j] = testcase;
+        j++;
+      }
+      console.log(testcases);
+      setTestCases(testcases);
+    })();
+  };
+
   const submitCodeHandler = () => {
     console.log(editorValue);
-    if (value) {
-      const newComment = {
-        createdBy: "edtest",
-        description: editorValue,
-        userId: 1,
-      };
-      fetch(testServer + "/submit", {
-        method: "POST",
-        headers: new Headers({
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        }),
-        body: JSON.stringify(newComment),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("Data recieved post");
-          console.log(data);
-          setTestCases(data);
-          setLoading(false);
-          setError(null);
-        })
-        .catch((error) => {
-          setLoading(false);
-          setError("Something went wrong, please try again later.");
-        });
-    }
-  };
+    (async () => {
+      const functionCaller = `\nadding(100,-3)\nadding_answer(100,-3)\nadding(0,4)\nadding_answer(0,4)\nadding(123941, -4)\nadding_answer(123941, -4)\nadding(1243, 3124)\nadding_answer(1243, 3124)`;
+      const input = ['100 -3', '0 4', '123941 -4', '1243 3124']
+      const client = piston({ server: "https://emkc.org" });
+      console.log(editorValue + correctFunction + functionCaller)
+      const result = await client.execute(
+        currentLanguage,
+        editorValue + correctFunction + functionCaller
+      );
+      console.log(result)
 
-  const getTestResults = () => {
-    fetch(
-      // Edward's local mock postman server
-      testServer + "/results"
-    )
-      .then((data) => {
-        data.json();
-      })
-      .then((data) => {
-        console.log("test results recieved get");
-        console.log(data);
-        setTestCases(data);
-        setLoading(false);
-        setError(null);
-      })
-      .catch((error) => {
-        setLoading(false);
-        setError("Something went wrong, please try again later.");
+      var results = result['run']['stdout'].split("\n");
+
+      var testcases = []
+
+      console.log(results)
+      var j = 0;
+      for (var i = 0; i < results.length - 1; i += 2) {
+        var testcase = { key: 1, number: 1, result: "Fail", stdin: "code", stdout: "", stdout_expected: "" };
+        testcase.key = j + 1;
+        testcase.number = j + 1;
+        testcase["stdout"] = results[i];
+        testcase["stdout_expected"] = "Hidden Test Case"
+        testcase["stdin"] = "Hidden Test Case";
+        if (results[i] == results[i + 1]) {
+          testcase['result'] = "Pass"
+        }
+        else {
+          testcase['result'] = "Fail"
+        }
+        testcases[j] = testcase
+        j++;
+      }
+      console.log(testcases)
+      setTestCases(testcases);
+    })();
+  };
+  const getAnswer = () => {
+    fetch(raw)
+      .then((r) => r.text())
+      .then((text) => {
+        setCorrectFunction(text);
       });
   };
 
-  const testcases = [
-    { key: 1, number: 1, result: "Pass", stdout: "" },
-    { key: 2, number: 2, result: "Fail", stdout: "Segmentation Fault" },
-    { key: 3, number: 3, result: "Pass", stdout: "" },
-    { key: 4, number: 4, result: "Pass", stdout: "" },
-    { key: 5, number: 5, result: "Pass", stdout: "" },
-    { key: 6, number: 6, result: "Fail", stdout: "Segmentation Fault" },
-    { key: 7, number: 7, result: "Pass", stdout: "" },
-    { key: 8, number: 8, result: "Pass", stdout: "" },
-  ];
-  const getMockTestResults = () => {
-    setTestCases(testcases);
-    console.log("mock test results set");
-  };
-
-  const getInstructions = () => {
-    fetch("http://localhost:3333/instructions")
-      .then((data) => {
-        data.json();
-      })
-      .then((data) => {
-        //console.log('instructions recieved get')
-        console.log(data);
-        setInstructionText(data);
-        setLoading(false);
-        setError(null);
-      })
-      .catch((error) => {
-        setLoading(false);
-        setError("Something went wrong, please try again later.");
-      });
-  };
-
-  useEffect(() => getInstructions(), []);
+  useEffect(() => getAnswer(), []);
+  useEffect(() => {
+    document.body.className = theme;
+  }, [theme]);
 
   return (
-    <div className="App">
-      <div className="my-4 font-sans text-2xl font-bold">
-        Unison Live Code Editor
-      </div>
+    <div className={`App ${theme}`}>
+      <Header
+        currentLanguage={currentLanguage}
+        setCurrentLanguage={setCurrentLanguage}
+        editorTheme={editorTheme}
+        setEditorTheme={setEditorTheme}
+        setTheme={setTheme}
+        editorValue={editorValue}
+        setEditorValue={setEditorValue}
+        placeholders={placeholders}
+        languageValue={languageValue}
+        setLanguageValue={setLanguageValue}
+      />
       <Panels
+        currentLanguage={currentLanguage}
+        editorValue={editorValue}
         setEditorValue={setEditorValue}
         instructions={instructionText}
         examples={examples}
         testCases={testCases}
+        submitCodeHandler={submitCodeHandler}
+        testCodeHandler={testCodeHandler}
+        editorTheme={editorTheme}
       />
-      <button
-        type="button"
-        className="btn right-60 bottom-10 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        onClick={submitCodeHandler}
-      >
-        Run Code
-      </button>
-      <button
-        type="button"
-        className="btn right-30 bottom-10 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded whitespace-nowrap"
-        onClick={getMockTestResults}
-      >
-        Submit <AiFillPlayCircle />
-      </button>
     </div>
   );
 }

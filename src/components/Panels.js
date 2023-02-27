@@ -6,24 +6,32 @@ import Output from "./Output";
 
 const Panels = (props) => {
   const [collapsedIndex, setCollapsedIndex] = useState(null);
-
   return (
     <Split
       collapsed={collapsedIndex}
       direction="vertical"
-      sizes={[60, 40]}
+      sizes={[80, 20]}
       style={{ height: `calc(100vh - 4rem)` }}
     >
       <Split className="flex">
-        <div className="bg-gray-300">
+        <div className="bg-white dark:bg-zinc-800 dark:text-gray-200 ">
           <Instructions text={props.instructions} examples={props.examples} />
         </div>
-        <div className="bg-gray-300">
-          <Editor setEditorValue={props.setEditorValue} />
+        <div className="bg-white dark:bg-zinc-800 dark:text-gray-200">
+          <Editor
+            setEditorValue={props.setEditorValue}
+            currentLanguage={props.currentLanguage}
+            editorTheme={props.editorTheme}
+            editorValue={props.editorValue}
+          />
         </div>
       </Split>
-      <div className="bg-gray-400 flex">
-        <Output testCases={props.testCases} />
+      <div className="bg-white dark:bg-zinc-800 dark:text-gray-200 flex">
+        <Output
+          testCases={props.testCases}
+          submitCodeHandler={props.submitCodeHandler}
+          testCodeHandler={props.testCodeHandler}
+        />
       </div>
     </Split>
   );
